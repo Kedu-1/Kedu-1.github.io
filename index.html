@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>刻度 · AI内容营销个人作品集</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='26' fill='%23ff6b4a'/%3E%3Ctext x='50' y='70' font-size='50' text-anchor='middle' fill='%23fff' font-family='sans-serif' font-weight='bold'%3E%E7%9B%B4%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@400;500;700;900&display=swap">
+<style>
+:root{
+  --ink:#2d2a32;
+  --paper:#fff7ee;
+  --paper-2:#ffead8;
+  --accent:#ff6b4a;
+  --accent-deep:#e04f2e;
+  --teal:#16b8a0;
+  --teal-deep:#0d8f7b;
+  --muted:#827583;
+  --line:#f3dfc9;
+  --fun:"ZCOOL KuaiLe","Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  --sans:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:400;line-height:1.8;font-size:16px;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+/* ===== 导航 ===== */
+.nav{position:sticky;top:0;z-index:50;background:rgba(255,247,238,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:62px}
+.logo{font-family:var(--fun);font-weight:400;font-size:21px;letter-spacing:.02em}
+.logo i{font-style:normal;color:var(--accent)}
+.nav-links{display:flex;gap:26px;align-items:center}
+.nav-links a{font-size:15px;color:var(--muted);font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--accent)}
+.nav-btn{display:none;background:none;border:none;cursor:pointer;padding:6px}
+.nav-btn svg{display:block}
+/* ===== Hero ===== */
+.hero{padding:92px 0 70px;border-bottom:1px solid var(--line);position:relative}
+.hero .wrap{position:relative;z-index:2}
+.hero-bgdot{position:absolute;border-radius:50%;pointer-events:none}
+.hd-1{width:320px;height:320px;background:linear-gradient(135deg,#ffd3a6,#ff9d76);right:4%;top:36px;opacity:.5}
+.hd-2{width:22px;height:22px;background:var(--teal);left:6%;bottom:40px;opacity:.8}
+.hd-3{width:14px;height:14px;background:var(--accent);left:16%;bottom:90px;opacity:.8}
+.hero-eyebrow{display:inline-block;background:var(--accent);color:#fff;font-size:13px;font-weight:500;letter-spacing:.1em;padding:6px 16px;border-radius:999px;margin-bottom:24px;transform:rotate(-2deg)}
+.hero h1{font-family:var(--fun);font-weight:400;font-size:clamp(36px,5.6vw,64px);line-height:1.3;letter-spacing:.01em}
+.hero h1 .accent{color:var(--accent)}
+.hero-sub{font-size:clamp(16px,1.9vw,19px);color:var(--muted);max-width:600px;margin-top:22px;line-height:2}
+.hero-cta{margin-top:34px;display:flex;gap:14px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 30px;border-radius:999px;font-size:15.5px;font-weight:700;border:none;cursor:pointer;transition:transform .18s,box-shadow .18s,background .18s}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 6px 18px rgba(255,107,74,.35)}
+.btn-primary:hover{background:var(--accent-deep);transform:translateY(-2px);box-shadow:0 10px 24px rgba(255,107,74,.4)}
+.btn-ghost{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+.btn-ghost:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(45,42,50,.1)}
+.hero-meta{display:flex;gap:40px;margin-top:52px;flex-wrap:wrap}
+.meta-item{display:flex;flex-direction:column}
+.meta-num{font-family:var(--fun);font-weight:400;font-size:32px;color:var(--accent-deep)}
+.meta-label{font-size:13px;color:var(--muted);margin-top:2px}
+/* ===== 区块通用 ===== */
+section{padding:84px 0}
+.sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:44px}
+.sec-no{font-family:var(--fun);font-weight:400;font-size:18px;color:var(--teal-deep);background:rgba(22,184,160,.14);border-radius:999px;padding:4px 16px}
+.sec-title{font-family:var(--fun);font-weight:400;font-size:clamp(26px,3.4vw,38px);line-height:1.3}
+.sec-line{flex:1;height:1px;background:var(--line)}
+.sec-note{font-size:13.5px;color:var(--muted);margin-left:auto;align-self:center}
+/* ===== 关于 ===== */
+.about-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:52px}
+.about-text p{color:#3a3540;margin-bottom:18px;font-size:16.5px}
+.about-text p:last-child{margin-bottom:0}
+.skill-tags{display:flex;flex-wrap:wrap;gap:10px;align-content:flex-start}
+.tag{border-radius:999px;padding:7px 18px;font-size:13.5px;font-weight:700;border:2px solid transparent}
+.tg-1{background:#ffe3d6;color:#c2451f;border-color:#ffc9b3}
+.tg-2{background:#d9f5ef;color:#0d8f7b;border-color:#b2e8dc}
+.tg-3{background:#ffe9f0;color:#d14d82;border-color:#ffc9da}
+.tg-4{background:#e7ecff;color:#4a5fd0;border-color:#c9d2ff}
+.tg-5{background:#fff3d1;color:#a8780b;border-color:#f7e2a8}
+.tg-6{background:#eadfff;color:#7a4fd0;border-color:#d8c6ff}
+/* ===== 作品 ===== */
+.works-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.work-card{background:#fff;border:2px solid var(--line);border-radius:22px;overflow:hidden;transition:transform .22s,box-shadow .22s;display:flex;flex-direction:column}
+.work-card:hover{transform:translateY(-5px) rotate(-.4deg);box-shadow:0 14px 34px rgba(45,42,50,.1)}
+.work-cover{height:210px;position:relative;overflow:hidden;background:#1a171c}
+.work-cover video{width:100%;height:100%;object-fit:cover;display:block}
+.wc-1{background:linear-gradient(135deg,#ff9d76,#ff6b4a)}
+.wc-2{background:linear-gradient(135deg,#4dd6c2,#16b8a0)}
+.wc-3{background:linear-gradient(135deg,#ffd166,#ff9d3c)}
+.wc-4{background:linear-gradient(135deg,#c58bf2,#9a5ce0)}
+.work-cover .wc-tag{position:absolute;top:14px;left:14px;background:#fff;color:var(--ink);font-size:12px;font-weight:700;padding:4px 13px;border-radius:999px;transform:rotate(-2deg);box-shadow:0 3px 8px rgba(0,0,0,.15);z-index:2}
+.work-cover .wc-glyph{position:absolute;right:16px;bottom:6px;color:rgba(255,255,255,.4);font-family:var(--fun);font-size:88px;line-height:1;z-index:4}
+.work-cover .wc-place{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:rgba(255,255,255,.92);text-align:center;padding:20px;z-index:2}
+.work-cover .wc-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:3;background:#1a171c}
+.work-cover .wc-place b{font-family:var(--fun);font-weight:400;font-size:22px}
+.work-cover .wc-place span{font-size:13.5px;margin-top:8px;opacity:.85}
+.work-body{padding:18px 22px 22px;display:flex;flex-direction:column;flex:1}
+.work-title{font-family:var(--fun);font-weight:400;font-size:19px}
+.work-desc{color:var(--muted);font-size:14px;margin-top:6px;flex:1}
+.work-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.work-tags span{font-size:12px;color:var(--teal-deep);background:rgba(22,184,160,.12);padding:3px 12px;border-radius:999px;font-weight:500}
+.work-link{display:inline-block;margin-top:14px;padding:8px 20px;border-radius:999px;background:var(--accent);color:#fff;font-size:13.5px;font-weight:700;transition:transform .18s,background .18s;align-self:flex-start}
+.work-link:hover{background:var(--accent-deep);transform:translateY(-2px)}
+/* ===== 经历时间轴 ===== */
+.timeline{display:grid;grid-template-columns:118px 28px 1fr}
+.tl-row{display:contents}
+.tl-time{padding:0 0 40px;text-align:right;font-size:14px;color:var(--muted);padding-top:2px;line-height:1.5;font-weight:500}
+.tl-axis{position:relative;display:grid;justify-items:center;align-items:start}
+.tl-axis::before{content:"";position:absolute;left:50%;top:6px;bottom:6px;width:2.5px;background:var(--line);transform:translateX(-50%);border-radius:2px}
+.tl-dot{width:15px;height:15px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px #ffd9cc;margin-top:6px;z-index:1}
+.tl-content{padding:0 0 40px;padding-left:8px}
+.tl-role{font-family:var(--fun);font-weight:400;font-size:18px}
+.tl-org{color:var(--accent-deep);font-size:14px;margin-top:2px;font-weight:500}
+.tl-note{color:var(--muted);font-size:14.5px;margin-top:6px;max-width:520px}
+.tl-row:last-child .tl-time,.tl-row:last-child .tl-content{padding-bottom:0}
+.tl-row:last-child .tl-axis::before{bottom:auto;height:0}
+/* ===== 联系 ===== */
+.contact{background:linear-gradient(135deg,#2d2a32,#453a44);color:#fff;border-radius:26px;padding:62px 52px;position:relative;overflow:hidden}
+.contact .sec-no{background:rgba(255,107,74,.25);color:#ffb39d}
+.contact .sec-title{font-size:clamp(26px,3.4vw,40px)}
+.contact-sub{color:rgba(255,255,255,.75);margin-top:14px;max-width:520px;font-weight:300}
+.contact-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:38px}
+.c-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:18px;padding:22px}
+.c-card .c-label{font-size:12.5px;color:#ffb39d;letter-spacing:.08em;font-weight:700}
+.c-card .c-value{font-size:16px;margin-top:8px;word-break:break-all}
+/* ===== Footer ===== */
+footer{padding:36px 0 48px;text-align:center;color:var(--muted);font-size:13.5px}
+/* ===== 移动端 ===== */
+@media (max-width:840px){
+  .nav-links{display:none;position:fixed;top:62px;right:0;background:var(--paper);flex-direction:column;align-items:flex-start;gap:0;padding:12px 0;width:210px;border:1px solid var(--line);border-right:none;border-radius:0 0 0 18px;box-shadow:-8px 8px 24px rgba(45,42,50,.1)}
+  .nav-links.open{display:flex}
+  .nav-links a{padding:12px 26px;width:100%;font-size:15px}
+  .nav-btn{display:block}
+  .hero{padding:70px 0 54px}
+  .hero-meta{gap:26px}
+  .about-grid{grid-template-columns:1fr;gap:34px}
+  .works-grid{grid-template-columns:1fr}
+  .timeline{grid-template-columns:70px 22px 1fr}
+  .contact{padding:42px 24px;border-radius:20px}
+  .contact-cards{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .work-card:hover{transform:none}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="logo" href="#top">刻度<i>.</i></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#about">关于</a>
+      <a href="#works">作品</a>
+      <a href="#gallery">分镜图</a>
+      <a href="#timeline">经历</a>
+      <a href="#contact">联系</a>
+    </nav>
+    <button class="nav-btn" id="navBtn" aria-label="打开菜单">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+  <!-- ===== 视图：Hero ===== -->
+  <section class="hero">
+    <span class="hero-bgdot hd-1"></span>
+    <span class="hero-bgdot hd-2"></span>
+    <span class="hero-bgdot hd-3"></span>
+    <div class="wrap">
+      <p class="hero-eyebrow">应届毕业生 · 求职作品集</p>
+      <h1>你好，我是<span class="accent">刻度</span><br>AI 内容营销 · 视频方向</h1>
+      <p class="hero-sub">华南师范大学网络与新媒体专业应届生，正在网易负责 AIGC 内容创作。专注 AI 视频全流程制作与内容营销，欢迎点击作品了解我。</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#works">看我的作品</a>
+        <a class="btn btn-ghost" href="#contact">联系我</a>
+      </div>
+      <div class="hero-meta">
+        <div class="meta-item"><span class="meta-num">4</span><span class="meta-label">部视频作品</span></div>
+        <div class="meta-item"><span class="meta-num">网易</span><span class="meta-label">AIGC 实习中</span></div>
+        <div class="meta-item"><span class="meta-num">5+</span><span class="meta-label">年内容创作</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 视图：关于 ===== -->
+  <section id="about">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-no">01</span>
+        <h2 class="sec-title">关于我</h2>
+        <span class="sec-line"></span>
+      </div>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>我是刻度（本名梁思慧），华南师范大学网络与新媒体专业应届生，正在网易担任 AIGC 内容创作实习生。独立负责 AI 漫剧的全流程制作——从脚本策划、分镜表制作、分镜图生成，到视频渲染与后期剪辑，熟悉 Seedance、image2、剪映等工具的多模型协同工作流。</p>
+          <p>同时我也搭建过 AIGC Agent 生产工作流，用 GPT-4o 做初稿、单变量控制法调优 prompt，为团队沉淀可复用的方法论。此外，我有 5 年多的电竞同人创作经历，在 LOFTER、微博累计发布二十余篇作品、1.5w+ 阅读热度，懂赛事生态，也懂怎么让内容更有传播力。</p>
+        </div>
+        <div class="skill-tags">
+          <span class="tag tg-1">Seedance 视频生成</span>
+          <span class="tag tg-2">image2 分镜图</span>
+          <span class="tag tg-3">剪映 后期剪辑</span>
+          <span class="tag tg-4">AI Agent / Prompt</span>
+          <span class="tag tg-5">GPT-4o / Kimi</span>
+          <span class="tag tg-6">可画 / 秀米 排版</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 视图：视频作品 ===== -->
+  <section id="works">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-no">02</span>
+        <h2 class="sec-title">视频作品</h2>
+        <span class="sec-line"></span>
+        <span class="sec-note">共 4 部 · 持续更新中</span>
+      </div>
+      <div class="works-grid">
+        <article class="work-card">
+          <div class="work-cover wc-1"><span class="wc-tag">宣传向 AI 视频</span><span class="wc-glyph">01</span>
+            <video controls preload="metadata" poster="">
+              <source src="assets/宣传向AI视频制作.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="work-body">
+            <h3 class="work-title">宣传向 AI 视频制作</h3>
+            <p class="work-desc">使用 AI 工具完成的宣传向视频作品（本地文件，点击播放）。</p>
+            <div class="work-tags"><span>AI 视频</span><span>宣传向</span></div>
+          </div>
+        </article>
+        <article class="work-card">
+          <div class="work-cover wc-2"><span class="wc-tag">游戏二创剪辑</span><span class="wc-glyph">02</span>
+            <video controls preload="metadata" poster="">
+              <source src="assets/二创向视频剪辑.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="work-body">
+            <h3 class="work-title">二创向视频剪辑</h3>
+            <p class="work-desc">游戏二创向剪辑作品（本地文件，点击播放）。</p>
+            <div class="work-tags"><span>二创</span><span>剪辑</span></div>
+          </div>
+        </article>
+        <article class="work-card">
+          <div class="work-cover wc-3"><span class="wc-glyph">03</span><span class="wc-tag">红果短剧 · AI 短剧</span>
+            <div class="wc-place"><b>长枪赴平生</b><span>都市剧情 · 游戏题材</span></div>
+          </div>
+          <div class="work-body">
+            <h3 class="work-title">长枪赴平生</h3>
+            <p class="work-desc">红果短剧 AI 短剧作品，参与全流程制作。都市剧情 + 游戏题材，讲述全服天花板重返江湖的故事。</p>
+            <div class="work-tags"><span>都市</span><span>游戏题材</span><span>AI 短剧</span></div>
+            <a class="work-link" href="https://novelquickapp.com/s/jJspkXxp0bk/" target="_blank" rel="noopener">在红果观看 →</a>
+          </div>
+        </article>
+        <article class="work-card">
+          <div class="work-cover wc-4"><span class="wc-glyph">04</span><span class="wc-tag">红果短剧 · AI 短剧</span>
+            <div class="wc-place"><b>我养的红毛犬怎么成上古神兽了</b><span>奇幻 · 全流程制作</span></div>
+          </div>
+          <div class="work-body">
+            <h3 class="work-title">我养的红毛犬怎么成上古神兽了</h3>
+            <p class="work-desc">红果短剧 AI 短剧，全流程制作：脚本策划、分镜设计、造型转绘与修改、AI 生成、后期剪辑。</p>
+            <div class="work-tags"><span>奇幻</span><span>萌系</span><span>全流程</span></div>
+            <a class="work-link" href="https://novelquickapp.com/s/pkNwtk-vjNw/" target="_blank" rel="noopener">在红果观看 →</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 视图：分镜图 ===== -->
+  <section id="gallery">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-no">03</span>
+        <h2 class="sec-title">分镜图</h2>
+        <span class="sec-line"></span>
+      </div>
+      <div class="works-grid">
+        <article class="work-card">
+          <div class="work-cover wc-3"><span class="wc-tag">分镜图 · 覆盖同名文件即替换</span><span class="wc-glyph">01</span>
+            <img class="wc-img" src="assets/分镜图1.jpg" alt="分镜图作品" onerror="this.style.display='none'">
+          </div>
+          <div class="work-body">
+            <h3 class="work-title">分镜图作品</h3>
+            <p class="work-desc">AI 漫剧制作中的分镜图。当前显示占位图，把真实图片命名为「分镜图1.jpg」放入 assets 文件夹覆盖即可，可多张（分镜图2.jpg、分镜图3.jpg…）。</p>
+            <div class="work-tags"><span>image2</span><span>分镜设计</span></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 视图：经历 ===== -->
+  <section id="timeline">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-no">04</span>
+        <h2 class="sec-title">经历</h2>
+        <span class="sec-line"></span>
+      </div>
+      <div class="timeline">
+        <div class="tl-row">
+          <div class="tl-time">2026.04 — 至今</div>
+          <div class="tl-axis"><span class="tl-dot"></span></div>
+          <div class="tl-content">
+            <div class="tl-role">AIGC 内容创作实习生</div>
+            <div class="tl-org">网易公司</div>
+            <p class="tl-note">独立负责 AI 漫剧全流程制作（脚本—分镜—生成—剪辑）；搭建 AIGC Agent 工作流并调优 prompt，培训 8 名团队成员。</p>
+          </div>
+        </div>
+        <div class="tl-row">
+          <div class="tl-time">2023 — 2026</div>
+          <div class="tl-axis"><span class="tl-dot"></span></div>
+          <div class="tl-content">
+            <div class="tl-role">新媒体运营副主任</div>
+            <div class="tl-org">华南师范大学华师学工公众号</div>
+            <p class="tl-note">负责活动预热视频脚本策划与剪辑、优秀师生专访拍摄，统筹覆盖全校 4 个校区的线下活动。</p>
+          </div>
+        </div>
+        <div class="tl-row">
+          <div class="tl-time">2023.09 — 2027.07</div>
+          <div class="tl-axis"><span class="tl-dot"></span></div>
+          <div class="tl-content">
+            <div class="tl-role">网络与新媒体（本科）</div>
+            <div class="tl-org">华南师范大学</div>
+            <p class="tl-note">已修传播学、新闻学、网络营销、网络舆情监测与研判等课程，方向为 AIGC 内容创作。</p>
+          </div>
+        </div>
+        <div class="tl-row">
+          <div class="tl-time">5 年+</div>
+          <div class="tl-axis"><span class="tl-dot"></span></div>
+          <div class="tl-content">
+            <div class="tl-role">电竞 / 泛娱乐同人创作者</div>
+            <div class="tl-org">LOFTER、微博等平台</div>
+            <p class="tl-note">累计发布二创文字作品二十余篇，获得 1.5w+ 阅读互动热度；长期关注 KPL、IVL 赛事生态。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 视图：联系 ===== -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact">
+        <span class="sec-no">05</span>
+        <h2 class="sec-title">一起聊聊？</h2>
+        <p class="contact-sub">感谢你看到这里。如果想进一步了解我，或者有实习 / 校招机会，欢迎联系。</p>
+        <div class="contact-cards">
+          <div class="c-card">
+            <div class="c-label">邮箱 EMAIL</div>
+            <div class="c-value">19200650615@163.com</div>
+          </div>
+          <div class="c-card">
+            <div class="c-label">电话</div>
+            <div class="c-value">19200650615</div>
+          </div>
+          <div class="c-card">
+            <div class="c-label">当前状态</div>
+            <div class="c-value">2027 校招进行中</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="year"></span> 刻度 · AI 内容营销作品集</div>
+</footer>
+
+<script>
+// 移动端菜单
+var navBtn=document.getElementById('navBtn'),navLinks=document.getElementById('navLinks');
+navBtn.addEventListener('click',function(){navLinks.classList.toggle('open')});
+navLinks.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){navLinks.classList.remove('open')})});
+// 页脚年份
+document.getElementById('year').textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
