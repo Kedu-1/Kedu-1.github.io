@@ -111,6 +111,25 @@ section{padding:84px 0}
 .note-desc{color:var(--muted);font-size:14px;margin-top:8px;line-height:1.9}
 .note-tags{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
 .note-tags span{font-size:12px;color:#a8780b;background:rgba(255,243,209,.9);border:1px solid #f7e2a8;padding:3px 12px;border-radius:999px;font-weight:600}
+.note-card{cursor:pointer}
+.note-more{display:inline-flex;align-items:center;gap:5px;margin-top:14px;font-size:12.5px;font-weight:700;color:var(--teal-deep);background:rgba(22,184,160,.12);padding:5px 14px;border-radius:999px;transition:background .18s,transform .18s;align-self:flex-start}
+.note-card:hover .note-more{background:rgba(22,184,160,.24)}
+/* ===== 文字作品展开浮层 ===== */
+.text-modal{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:24px;visibility:hidden;opacity:0;transition:opacity .22s,visibility .22s}
+.text-modal.open{visibility:visible;opacity:1}
+.text-modal-backdrop{position:absolute;inset:0;background:rgba(45,42,50,.55);backdrop-filter:blur(3px)}
+.text-modal-card{position:relative;width:100%;max-width:640px;max-height:min(78vh,760px);overflow-y:auto;background:linear-gradient(160deg,#fff8e6,#ffefd2);border:2px dashed #eec98f;border-radius:22px;padding:34px 32px 30px;box-shadow:0 24px 60px rgba(45,42,50,.35);transform:translateY(14px) scale(.98);transition:transform .24s}
+.text-modal.open .text-modal-card{transform:translateY(0) scale(1)}
+.text-modal-card .note-tape{top:16px;transform:translateX(-50%) rotate(-2deg)}
+.text-modal-close{position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:50%;border:none;background:#fff;color:var(--accent-deep);font-size:22px;line-height:1;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.12);transition:transform .18s,background .18s;z-index:2;display:flex;align-items:center;justify-content:center}
+.text-modal-close:hover{background:var(--accent);color:#fff;transform:rotate(90deg)}
+.text-modal-title{font-family:var(--fun);font-weight:400;font-size:26px;line-height:1.4;padding-right:44px}
+.text-modal-body{margin-top:18px;color:#3a3540;font-size:15.5px;line-height:2.05}
+.text-modal-body p{margin-bottom:16px}
+.text-modal-body p:last-child{margin-bottom:0}
+.text-modal-tags{display:flex;gap:8px;margin-top:22px;flex-wrap:wrap}
+.text-modal-tags span{font-size:12.5px;color:#a8780b;background:rgba(255,243,209,.9);border:1px solid #f7e2a8;padding:4px 14px;border-radius:999px;font-weight:600}
+body.no-scroll{overflow:hidden}
 /* ===== 红果短剧外链栏 ===== */
 .drama-strip{margin-top:28px;background:#fff;border:2px solid var(--line);border-radius:22px;padding:22px 24px 24px}
 .drama-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
@@ -159,6 +178,7 @@ footer{padding:36px 0 48px;text-align:center;color:var(--muted);font-size:13.5px
   .about-grid{grid-template-columns:1fr;gap:34px}
   .works-grid{grid-template-columns:1fr}
   .drama-item{flex:1 1 100%}
+  .text-modal-card{padding:28px 22px 24px;max-height:82vh}
   .timeline{grid-template-columns:70px 22px 1fr}
   .contact{padding:42px 24px;border-radius:20px}
   .contact-cards{grid-template-columns:1fr}
@@ -167,6 +187,7 @@ footer{padding:36px 0 48px;text-align:center;color:var(--muted);font-size:13.5px
   html{scroll-behavior:auto}
   .work-card:hover{transform:none}
   .note-card:hover{transform:none}
+  .text-modal-card{transition:none;transform:none}
 }
 </style>
 </head>
@@ -238,9 +259,10 @@ footer{padding:36px 0 48px;text-align:center;color:var(--muted);font-size:13.5px
 
   <!-- ===== 视图：文字作品 =====
        编辑说明：
-       1) 每篇作品对应一张 <article class="note-card">，内容为 标题 + 节选 + 风格标签；
-       2) 新增一篇：整体复制一张卡片，改 .note-title / .note-desc / .note-tags 即可；
-       3) 便签卡片自动错落排列，桌面约 3 列，窄屏自动收窄。
+       1) 每篇作品对应一张 <article class="note-card">：标题 + 节选 + 风格标签 + "点击展开全文"；
+       2) 完整全文放在卡片内隐藏的 .text-full 里（每个段落一个 <p>），点击卡片会以浮层展开；
+       3) 新增一篇：整体复制一张卡片，改 .note-title / .note-desc / .note-tags / .text-full 即可；
+       4) 便签卡片自动错落排列，桌面约 3 列，窄屏自动收窄。
   -->
   <section id="textworks">
     <div class="wrap">
@@ -251,41 +273,76 @@ footer{padding:36px 0 48px;text-align:center;color:var(--muted);font-size:13.5px
         <span class="sec-note">短篇创作 · 二十余篇</span>
       </div>
       <div class="note-grid">
-        <article class="note-card">
+        <article class="note-card" role="button" tabindex="0" aria-haspopup="dialog">
           <span class="note-tape"></span>
           <h3 class="note-title">所有故事完结以后</h3>
           <p class="note-desc">"直到现在，直到刚才，玛丽琳才恍然惊觉内斯已经长高了这么多……她的第一个孩子，就像莉迪亚悄悄学会走路那样悄悄地长大了。"</p>
           <div class="note-tags"><span>同人</span><span>家庭叙事</span></div>
+          <span class="note-more">点击展开全文 →</span>
+          <div class="text-full" hidden>
+            <p>如果非要用一种动物来形容杰克的话，内斯首先会想到豺狼、獾、秃鹫、鬣狗等食腐性动物，在跳过了这一类饱含偏见和主观的单词以后，他才会想到其他的，比如狐狸。</p>
+            <p>那是一只狡猾而老谋深算的狐狸，通过自己油亮美丽的皮毛吸引别人，经过了长时间的耐心狩猎后，狐狸会露出自己的獠牙——“嘭——”水花溅起，发出一声重物落水的响。内斯猛地坐直了，下意识循声看去。是玛丽琳在煮鸡蛋，他的水煮蛋，另一边是一个平底锅，热油欢快地溅开，他知道，那是给詹姆斯和汉娜准备的。这是玛丽琳这么久以来再一次为他们用新鲜的食材做早餐，手艺有些生疏，但他们还是满含期待。玛丽琳有些歉意地望向内斯，他的舌头比大脑更快找到答案。“没事的，妈妈。”他站起身，往门内看了一眼。</p>
+            <p>厨房的门框上有几条线，蓝色的是内斯的，白色的是莉迪亚的，红色的是汉娜的。每年圣诞节，父母都会给兄妹们量身高。白色的逐年增长，规规矩矩地写上了年份，最终停在蓝线下方一点点的位置——但这并不代表莉迪亚的身高马上就接近了内斯，只不过是他最后一次量身高已经是几年前了。红线还停在最下方，但内斯总觉得汉娜长高了很多，也许是因为小姑娘总是喜欢缩着肩膀。</p>
+            <p>直到现在，直到刚才，玛丽琳才恍然惊觉内斯已经长高了这么多，她的第一个孩子，就像莉迪亚悄悄学会走路那样悄悄地长大了，带着满腔秘密站在她的面前。她的手指在口袋里捻了捻，学生时代她喜欢这样考察自己，用一个小本子记着各种理论，摸到哪一页就背出上面理论的内容；后来笔记本变成了摊开的烹饪书；再到莉迪亚的试卷、她送给莉迪亚的书，和一本空白的日记本。现在她什么也没有摸到，只是习惯性地搓了一下指尖，触到了一层茧。</p>
+          </div>
         </article>
-        <article class="note-card">
+        <article class="note-card" role="button" tabindex="0" aria-haspopup="dialog">
           <span class="note-tape"></span>
           <h3 class="note-title">死运河</h3>
           <p class="note-desc">"数个季节过去，这是他身上好得最慢的一道伤痕，但即便这样他也没有摘下，铁环将他永远地桎梏在了那个灿烂的秋季。"</p>
           <div class="note-tags"><span>原创</span><span>战争题材</span></div>
+          <span class="note-more">点击展开全文 →</span>
+          <div class="text-full" hidden>
+            <p>冬日里难得的阳光有着蜂蜜戚风蛋糕的质感，拂过一丛丛苏格兰冷杉和一片白桦树林。叶隙间的光圈叫偶有的鸟儿也变得影影绰绰，而雪堆下降。他想起临别前那个彩色泡泡般的愿景——有着夏日黄昏时飞过太阳的群鸟、只留下两道车辙的路、以及在记忆里永恒的蓝调时分——一个彻头彻尾的谎言。指环也是痛苦的产物，那人曾亲手为他戴上，在寻常的秋日里向他承诺四季。无名指根部有一道疤，微微凸起，新长出的嫩肉边缘如同虬结的树根。相比于后背、手臂以及脸颊，这块疤痕是那么无足轻重，以至于现在他早就忘记这是在哪场战争中留下的产物了。与此有关的记忆在收音机宣布战事结束的瞬间，随着炮火和眼泪一起遗失在了战壕里。数个季节过去，这是他身上好得最慢的一道伤痕，但即便这样他也没有摘下，铁环将他永远地桎梏在了那个灿烂的秋季。</p>
+            <p>医生顿了顿，目光从密码学家惨白瘦削的脸上移到病床，顺着白墙看向铁栏窗。他想起自己接手的第一个病人——在军队这么多人当中他唯一一个认识的——一个和他同乡的木匠，此前只会干些粗活儿，连鸡都没杀过。那人来找他借过灯，到点停电了，只有医疗室还有些光。“等我回去了”是那木匠说过最多的话，彼时他往往伸着脖子，慢慢地打磨一把木梳。后来木梳做好了，被人揣在兜里摩挲得发亮，但再也等不到送出的那一天。</p>
+            <p>再往上看，便被刺目的灯光晃了眼。</p>
+            <p>哨子一般的北风经过村庄，将木堆缝隙里的空气抽干，身边的一切仿佛都落入了失真的怪圈，浅淡地散发着消逝的气息。</p>
+          </div>
         </article>
-        <article class="note-card">
+        <article class="note-card" role="button" tabindex="0" aria-haspopup="dialog">
           <span class="note-tape"></span>
           <h3 class="note-title">广州爱情故事</h3>
           <p class="note-desc">"他觉得无论多久都难以习惯广州那漫长而潮湿的雨季……伞里积蓄的雨水还在往下掉，直到进了家门。"</p>
           <div class="note-tags"><span>原创</span><span>现实题材</span></div>
+          <span class="note-more">点击展开全文 →</span>
+          <div class="text-full" hidden>
+            <p>新的出租屋不如城中村那样破旧，但也没有好太多。楼下的门锁锈了，钥匙插了半天也插不进去，他锤了两下门才堪堪拧正了旋钮。声控灯上了年纪已经不再灵敏，他用力跺脚，在灯光亮起的那一秒瞥见了信箱上经年累月的红锈。地板是水泥的，而墙壁的下半不知为何镶嵌了瓷砖。每到回南天时上面凝聚的水珠就不分昼夜地往下滴，某时某日再打开信箱就会发现里面的水电费通知单早已受潮。他觉得无论多久都难以习惯广州那漫长而潮湿的雨季，凹凸不平的水泥地上满是堆积的水洼，收伞以后往地上一抖再抬步走，从一楼的到二楼水脚印逐渐变淡了，但伞里积蓄的雨水还在往下掉，直到进了家门。</p>
+            <p>他想他本该是不喜欢这里的。</p>
+          </div>
         </article>
-        <article class="note-card">
+        <article class="note-card" role="button" tabindex="0" aria-haspopup="dialog">
           <span class="note-tape"></span>
           <h3 class="note-title">星云</h3>
           <p class="note-desc">"他顺着两侧的旋转楼梯往上走，从巨大的落地窗前往下看，俯视整个霍格沃茨城堡；塔楼只是小小的一部分。"</p>
           <div class="note-tags"><span>同人</span><span>奇幻</span></div>
+          <span class="note-more">点击展开全文 →</span>
+          <div class="text-full" hidden>
+            <p>石门没有把手或钥匙孔，只有一个青铜门环，吟唱般向驻足的学生发问。他跟着回答了问题的学生一起进入了拉文克劳公共休息室，石门缓缓推开，巨大的石雕鹰映入眼帘。它高悬于正对门的墙上，鹰头和鸟喙突出，羽翼张开，像是在庇护着拉文克劳的学生。鸟头和鹰翼的最高点还留有一片空白，那处被镶嵌上了玻璃，从这里往外看，可以望见广袤的天空。两侧是持矛的盔甲骑士，铁甲锃亮，有人经过时他们会对着来来往往的行人行礼。天花板被施了魔法，无论何时抬头都是日月的轨迹图。一盏吊灯为门口的主光源，他听说这是象征着求知的知识之火，四季不灭，已经燃了近百年。他顺着两侧的旋转楼梯往上走，从巨大的落地窗前往下看，俯视整个霍格沃茨城堡；塔楼只是小小的一部分。</p>
+          </div>
         </article>
-        <article class="note-card">
+        <article class="note-card" role="button" tabindex="0" aria-haspopup="dialog">
           <span class="note-tape"></span>
           <h3 class="note-title">夏日表层</h3>
           <p class="note-desc">"日光一般的少年心事……他这时才反应过来，1990年的漫长夏天结束了。"</p>
           <div class="note-tags"><span>原创</span><span>青春怀旧</span></div>
+          <span class="note-more">点击展开全文 →</span>
+          <div class="text-full" hidden>
+            <p>纸袋被接到另一人怀中，雨伞的边缘滴答着被天空染成浅蓝色的水滴，时不时碰撞在一起，又短暂地分开。震动随着伞柄传到手心，像是靠得太近，肩膀撞到了一起。等回到旅馆，天恰好放晴。泥土的腥味夹杂着青葡萄的酸涩一同翻滚，蜗牛慢吞吞地留下些湿润的水迹。</p>
+            <p>不远处邻居先生搬来躺椅，架在草地上，把报纸盖在脸上，不久就发出鼾声。邻居太太则端起茶碟，目光从地上两串并排的脚印，慢悠悠地移向天边的云。“少年心事。”她愉悦地叹气，消散的尾音听不出是笑抑或是叹息。</p>
+            <p>日光一般的少年心事。</p>
+            <p>汽车越跑越快，轮胎滚过路面，小石块叫车子颠簸起来，他听不见一切声音。他翻身跪在车垫子上，用力伸着脖子，但是带着牛仔帽男孩的身影，就如同夏日一般一去不复返了。</p>
+            <p>□□□单手支在下巴上，听蒸汽火车幽怨地鸣笛了几秒，随后，这样苍翠的长夏、这样热烈的土地、这样燃烧的月份慢慢驶离了他的视野。四周都弥漫上一层水雾，他后知后觉是自己在哭。郁闷的心绪就像日暮的金色时光，以一种不容拒绝的姿态强行霸占记忆里的一席之地，等他回过神来时早已是蓝调时分，星月从云层间显露出来，窗外的树木变作楼房，又将他卷入那一成不变、循规蹈矩的生活中去。他这时才反应过来，1990年的漫长夏天结束了。</p>
+          </div>
         </article>
-        <article class="note-card">
+        <article class="note-card" role="button" tabindex="0" aria-haspopup="dialog">
           <span class="note-tape"></span>
           <h3 class="note-title">可能的诗</h3>
           <p class="note-desc">"过往的记忆已经朦胧到快洇晕开，像是他晨起赶公交的那一片雾，随处不在的水汽将他包裹成一只蝉蛹。"</p>
           <div class="note-tags"><span>原创</span><span>抒情短篇</span></div>
+          <span class="note-more">点击展开全文 →</span>
+          <div class="text-full" hidden>
+            <p>面巾纸比他更早地意识到自己在哭泣，快速的吸走了面颊上残留的一滴盐水。□□□什么都没有说，只是帮他牵好被角，暖黄的灯光分隔阴影，一切都如同一张随手就能拿起来的老照片。过往的记忆已经朦胧到快洇晕开，像是他晨起赶公交的那一片雾，随处不在的水汽将他包裹成一只蝉蛹。他久违地想家，好像这还是出来闯荡年岁里的头一遭。</p>
+          </div>
         </article>
       </div>
     </div>
@@ -459,6 +516,18 @@ footer{padding:36px 0 48px;text-align:center;color:var(--muted);font-size:13.5px
   <div class="wrap">© <span id="year"></span> 刻度 · AI 内容营销作品集</div>
 </footer>
 
+<!-- ===== 文字作品展开浮层 ===== -->
+<div class="text-modal" id="textModal" aria-hidden="true">
+  <div class="text-modal-backdrop" data-modal-close></div>
+  <div class="text-modal-card" role="dialog" aria-modal="true" aria-labelledby="textModalTitle">
+    <span class="note-tape"></span>
+    <button class="text-modal-close" id="textModalClose" aria-label="关闭">×</button>
+    <h3 class="text-modal-title" id="textModalTitle"></h3>
+    <div class="text-modal-body" id="textModalBody"></div>
+    <div class="text-modal-tags" id="textModalTags"></div>
+  </div>
+</div>
+
 <script>
 // 移动端菜单
 var navBtn=document.getElementById('navBtn'),navLinks=document.getElementById('navLinks');
@@ -466,6 +535,27 @@ navBtn.addEventListener('click',function(){navLinks.classList.toggle('open')});
 navLinks.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){navLinks.classList.remove('open')})});
 // 页脚年份
 document.getElementById('year').textContent=new Date().getFullYear();
+// 文字作品浮层：点击卡片 → 浮层展开全文
+var textModal=document.getElementById('textModal'),textModalTitle=document.getElementById('textModalTitle'),textModalBody=document.getElementById('textModalBody'),textModalTags=document.getElementById('textModalTags'),textModalClose=document.getElementById('textModalClose'),lastCard=null;
+function openTextModal(card){
+  textModalTitle.textContent=card.querySelector('.note-title').textContent;
+  textModalBody.innerHTML='';
+  card.querySelectorAll('.text-full p').forEach(function(p){var np=document.createElement('p');np.textContent=p.textContent;textModalBody.appendChild(np)});
+  textModalTags.innerHTML='';
+  card.querySelectorAll('.note-tags span').forEach(function(s){var ns=document.createElement('span');ns.textContent=s.textContent;textModalTags.appendChild(ns)});
+  lastCard=card;textModal.classList.add('open');textModal.setAttribute('aria-hidden','false');document.body.classList.add('no-scroll');textModalClose.focus();
+}
+function closeTextModal(){
+  textModal.classList.remove('open');textModal.setAttribute('aria-hidden','true');document.body.classList.remove('no-scroll');
+  if(lastCard){lastCard.focus();lastCard=null;}
+}
+document.querySelectorAll('.note-card').forEach(function(card){
+  card.addEventListener('click',function(){openTextModal(card)});
+  card.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();openTextModal(card);}});
+});
+textModalClose.addEventListener('click',closeTextModal);
+document.querySelector('.text-modal-backdrop').addEventListener('click',closeTextModal);
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&textModal.classList.contains('open')){closeTextModal();}});
 </script>
 </body>
 </html>
